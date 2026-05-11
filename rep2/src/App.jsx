@@ -1,15 +1,26 @@
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { CartProvider } from "./context/CartContext";
 import Header from "./components/Header";
-import ProductList from "./components/ProductList";
-import products from "./data/products";
-import "./styles/style.css";
+import Home from "./pages/Home";
+import CategoryPage from "./pages/CategoryPage";
+import CartPage from "./pages/CartPage";
+import "./style/style.css";
 
 function App() {
   return (
-    <div>
-      <Header />
-
-      <ProductList products={products} />
-    </div>
+    <CartProvider>
+      <BrowserRouter>
+        <Header />
+        <main className="app-main">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/category/:categoryName" element={<CategoryPage />} />
+            <Route path="/cart" element={<CartPage />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </main>
+      </BrowserRouter>
+    </CartProvider>
   );
 }
 
